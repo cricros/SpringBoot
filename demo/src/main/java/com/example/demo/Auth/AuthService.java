@@ -24,8 +24,11 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request){
         // patron de disenio builder?
         User user = User.builder()
+                // declaro los parametros que integran a la clase user para poder contruir el objeto y guardarlo en la
+                // bd
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .country(request.getCountry())
                 .role(Role.USER)

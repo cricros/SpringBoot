@@ -1,5 +1,8 @@
 package com.example.demo.Auth;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,5 +13,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    String username, password, fistName, lastName, country;
+
+    @NotEmpty(message = "Username is requiered")
+    String username;
+
+    @NotEmpty(message = "Password is requiered")
+    @Size(min = 6, max = 18, message = "Your password should it be between 6 and 18")
+    String password;
+
+    @NotEmpty(message = "FirstName is requiered")
+    String firstName;
+
+    @NotEmpty(message = "LastName is requiered")
+    String lastName;
+
+    @NotEmpty(message = "Country is requiered")
+    String country;
+
 }
