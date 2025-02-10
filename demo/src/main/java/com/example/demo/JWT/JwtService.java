@@ -29,7 +29,13 @@ public class JwtService {
         return getToken(new HashMap<>(), user);
     }
 
+
     private String getToken(HashMap<String,Object> extraClaims, UserDetails user) {
+        extraClaims.put("roles", user.getAuthorities().stream()
+                // el map nos permite iterar una lista sin un for
+                // Convertimos a String puro
+                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .toList());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -54,7 +60,7 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private Claims getAllClaims(String token){
+    public Claims getAllClaims(String token){
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getKey())
